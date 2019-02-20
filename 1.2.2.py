@@ -13,7 +13,7 @@ def tri_a_bulles(transactions):
             return transactions
 
 # tableau à deux dimensions pour stocker les transactions
-# les sous tableaux contiennent la taille du bloc, le pourboire ainsi qu'un ration indiquant la rentabilité d'une transaction
+# les sous tableaux contiennent la taille du bloc, le pourboire ainsi qu'un ratio indiquant la rentabilité d'une transaction
 transactions = [
                   [2000, 13000, 0],
                   [6000, 9000, 0],
