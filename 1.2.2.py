@@ -1,39 +1,35 @@
 #!/usr/bin/env python3
 
-def tri_a_bulles(transactions):
-   for i in reversed(range(0,len(transactions))):
-        tableau_trie = True
-        for j in range(0,i):
-            if (transactions[j+1][2] < transactions[j][2]):
-                tmp = transactions[j]
-                transactions[j] = transactions[j+1]
-                transactions[j+1] = tmp
-                tableau_trie = False
-        if (tableau_trie):
-            return transactions
+from itertools import combinations
 
 # tableau à deux dimensions pour stocker les transactions
-# les sous tableaux contiennent la taille du bloc, le pourboire ainsi qu'un ratio indiquant la rentabilité d'une transaction
+# les sous tableaux contiennent la taille du bloc et le pourboire
 transactions = [
-                  [2000, 13000, 0],
-                  [6000, 9000, 0],
-                  [800, 2000, 0],
-                  [700, 1500, 0],
-                  [1200, 3500, 0],
-                  [1000, 1800, 0],
-                  [1300, 5000, 0],
-                  [600, 1500, 0],
+                  [2000, 13000],
+                  [6000, 9000],
+                  [800, 2000],
+                  [700, 1500],
+                  [1200, 3500],
+                  [1000, 1800],
+                  [1300, 5000],
+                  [600, 1500],
               ]
-# on parcours les transactions pour calculer leur ratio de rentabilité
-for i in range(0,len(transactions)):
-   transactions[i][2] = transactions[i][0] / transactions[i][1]
-# On tri le tablea des transactions par rentabilité
-transactions = tri_a_bulles(transactions)
 
-print("Les meilleures transactions à inclure sont : ")
-taille = 0
-for i in range(0,len(transactions)):
-   if (taille + transactions[i][0] <= 6000):
-      taille = taille + transactions[i][0]
-      print ("Taille : " + str(transactions[i][0]) + " Pourboire : " + str(transactions[i][1]))
+max_satoshis = 0;
+for i in range(1, len(transactions)+1):    
+    for combinaison in combinations(transactions, i):
+        octets = 0
+        satoshis = 0        
+        for transaction in combinaison:
+            octets = octets + transaction[0]
+            if (octets > 6000):
+                break
+            satoshis = satoshis + transaction[1]
+        if (satoshis > max_satoshis):
+            max_satoshis = satoshis
+            best_combinaison = combinaison
+
+print ("La meilleure combinaison est " + str(best_combinaison))
+        
+
 
